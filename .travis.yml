@@ -21,3 +21,8 @@ deploy:
   app: devops-lab-paloma
   on:
       branch: main
+  strategy: api
+
+# Config Validation
+dist: xenial
+os: linux
