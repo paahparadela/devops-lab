@@ -29,7 +29,24 @@ jobs:
           organization: paahparadela
           token: ${SONAR_TOKEN}
 
-    - stage: Deploy
+    - stage: Deploy Stage
+      script: skip
+      # Definir o Deploy no Heroku
+      deploy:
+        provider: heroku
+        strategy: api
+        api_key: $HEROKU_API_KEY
+        edge: true
+        app: devops-lab-paloma-stg
+        on:
+          branch: main
+
+    - stage: Teste STG
+      name: "Teste Ambiente STG"
+      script: 
+        - curl https://devops-lab-paloma-stg.herokuapp.com/ | grep Laboratório Pipeline DevOps || travis_terminate 1;
+
+    - stage: Deploy Prod
       script: skip
       # Definir o Deploy no Heroku
       deploy:
@@ -41,6 +58,10 @@ jobs:
         on:
           branch: main
 
+    - stage: Teste Prod
+      name: "Teste Ambiente Prod"
+      script: 
+        - curl https://devops-lab-paloma.herokuapp.com/ | grep Laboratório Pipeline DevOps || travis_terminate 1;
 notifications:
  slack:
   secure: GC1PZUNhkaMgNXtrOSF8Qy2GI3DgJYKIYLotuLbgp1Gq+CHEPszyECp+jWtinzHTf1kUhMflFeKppqbBTVFQkzaNHEr4CiRHxVUZdPQQ9on4fgzID8K5JDujdE1Ir3msNu8cI/Eq6fc/qQkuHlQsn8LFuO16rFOCRolde+1FNKbXN8x2k2S0C5InS1NpSXDQ/MJfuWppR7D0zDQG3IuxbQ/p7rTjlfCHxZhvciJvWGevCKZAeZAZanCWDSfzUVgAs6fJdI4soUx+KAkFP3O9PHKxyuysS6n5z/bucBae0drO9Uge8EFOWux43EtavZ9FqUQd+/l6kh2v3sgpn/XGWlo8xCOx/CKyryBFcWkQlCOx6kvpWWtaxIdF4WrpyeYQMxHcG8iHMT8DF1Xsa/yFnVsF49OvQY4YJJ0WeGASTWUYmpFtIrwlUx+BrwCQSRoUT6FBL7h7qaATa6AjXeHFn96JyDPsJm20RSlNhTaMkN7OBiGZyC/Y9MG8g0Xojd+darUxQrkfkRVRvu47bZ5Z7cAxLctzCHEQk/NRxDTrBlpY4RIPtBfY5wAzYSesbr9jkJe8sd4EU7bTDIdnXZjGR45bIQ8ekL0u9F4fJksDRx3ECzR9T6PQDSsT+7hztCpZcRQYjmjliMaY1WE2AExV603tyvBljtPrRorC04UKUiU=
