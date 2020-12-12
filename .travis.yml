@@ -40,3 +40,6 @@ jobs:
         app: devops-lab-paloma
         on:
           branch: main
+
+notifications:
+  slack: devopstoolsgroup:2T95kq4GyhKKnAMFrwlCsPhy
