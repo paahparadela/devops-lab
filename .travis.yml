@@ -44,7 +44,7 @@ jobs:
     - stage: Teste STG
       name: "Teste Ambiente STG"
       script: 
-        - sleep 2;curl https://devops-lab-paloma-stg.herokuapp.com/ | grep "Laboratório Pipeline DevOps" || travis_terminate 1;
+        - sleep 2;curl https://devops-lab-paloma-stg.herokuapp.com/ | grep Pipeline || travis_terminate 1;
 
     - stage: Deploy Prod
       script: skip
@@ -61,7 +61,7 @@ jobs:
     - stage: Teste Prod
       name: "Teste Ambiente Prod"
       script: 
-        - sleep 2;curl https://devops-lab-paloma.herokuapp.com/ | grep "Laboratório Pipeline DevOps" || travis_terminate 1;
+        - sleep 2;curl https://devops-lab-paloma.herokuapp.com/ | grep Pipeline || travis_terminate 1;
 
 notifications:
  slack:
